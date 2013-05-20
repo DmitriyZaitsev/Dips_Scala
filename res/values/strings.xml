@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Dips</string>
+	<string name="sorry_pal_too_cool">Прости, дружище, но ты слишком крут. Иди выебывайся в свой
+		двор!
+	</string>
+	<string name="sorry_pal_too_frail">Прости, дружище, но ты слишком хилый. Иди
+		позанимайся еще, а потом приходи!
+	</string>
+	<string name="done">Done</string>
+	<string name="cancel">Cancel</string>
+	<string name="how_much">Сколько раз отжимаешься?</string>
+	<string name="ok">OK</string>
+	<string name="are_you_ready">Hello Warior! Are you ready to rock?!</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="current_dips">Current dips</string>
+	<string name="remaining">Remaining</string>
+	<string name="proceed">Proceed</string>
+	<string name="left_digit">Left digit</string>
+	<string name="right_digit">Right digit</string>
+	<string name="zero_digit">0</string>
+	<string name="training_finished">Training successfully finished. Now you can have
+		some rest!
+	</string>
+	<string name="finish">Finish</string>
+	<string name="completed">Completed</string>
+	<string name="msg_very_easy">That was very easy</string>
+	<string name="msg_very_hard">That was very hard</string>
+	<string name="msg_fine">That was fine</string>
+	<string name="time_to_rest">Time to rest</string>
+</resources>
