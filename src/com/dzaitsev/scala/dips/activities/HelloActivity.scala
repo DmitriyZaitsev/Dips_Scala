@@ -28,7 +28,7 @@ class HelloActivity extends Activity {
 				val prefs: IDipsPreferences = new DipsPreferences(HelloActivity.this)
 				var intent: Intent = null
 
-				if (prefs.isAlreadyRegistered) {
+				if (prefs.alreadyRegistered) {
 					intent = new Intent(HelloActivity.this, classOf[MainActivity])
 				} else {
 					intent = new Intent(HelloActivity.this, classOf[InitialDipsActivity])

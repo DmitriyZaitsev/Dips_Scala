@@ -10,7 +10,7 @@ object Dips {
 	/** @return level which depends on dips */
 	def calcLevel(dips: Int): Int = {
 		for (i <- DipsSet.MIN_LEVEL to DipsSet.MAX_LEVEL - 1) {
-			if (DipsSet.getSet1(i - 1) <= dips && dips < DipsSet.getSet1(i)) {
+			if (DipsSet.set1(i - 1) <= dips && dips < DipsSet.set1(i)) {
 				return i
 			}
 		}
@@ -39,14 +39,14 @@ class Dips extends Exercise {
 
 	def this(level: Int) {
 		this()
-		mMaxLevel = 16
-		mMaxSet = 5
+		_maxLevel = 16
+		_maxSet = 5
 		if (level <= Exercise.MIN_LEVEL) {
-			mLevel = Exercise.MIN_LEVEL
-		} else if (mMaxLevel < level) {
-			mLevel = mMaxLevel
+			_level = Exercise.MIN_LEVEL
+		} else if (_maxLevel < level) {
+			_level = _maxLevel
 		} else {
-			mLevel = level
+			_level = level
 		}
 		reset()
 	}
@@ -56,15 +56,15 @@ class Dips extends Exercise {
 	 *
 	 * @return amount of exercises of set
 	 */
-	def getSet(number: Int): Int = {
+	def set(number: Int): Int = {
 		if (number <= 1) {
-			return DipsSet.getSet1(mLevel - 1)
+			return DipsSet.set1(_level - 1)
 		}
 		number match {
-			case 2 => DipsSet.getSet2(mLevel - 1)
-			case 3 => DipsSet.getSet3(mLevel - 1)
-			case 4 => DipsSet.getSet4(mLevel - 1)
-			case _ => DipsSet.getSet5(mLevel - 1)
+			case 2 => DipsSet.set2(_level - 1)
+			case 3 => DipsSet.set3(_level - 1)
+			case 4 => DipsSet.set4(_level - 1)
+			case _ => DipsSet.set5(_level - 1)
 		}
 	}
 }

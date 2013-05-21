@@ -18,67 +18,59 @@ trait Exercise {
 	 *
 	 * @return amount of exercises of set
 	 */
-	def getSet(number: Int): Int
+	def set(number: Int): Int
 
 	/** @return number of completed exercises */
-	def getCompleted: Int = {
-		mCompletedExercises
-	}
+	def completed: Int = _completed
 
 	/** @return number of current dips necessary to do */
-	def getCurrent: Int = {
-		mCurrentExercises
-	}
+	def current: Int = _current
 
 	/** @return number of current set */
-	def getCurrentSet: Int = {
-		mCurrentSet
-	}
+	def currentSet: Int = _currentSet
 
-	def getRemaining: Int = {
-		getTotal - mCompletedExercises
-	}
+	def remaining: Int = total - _completed
 
 	/** @return number of total exercises amount for all sets */
-	def getTotal: Int = {
+	def total: Int = {
 		var total: Int = 0
 
-		for (i <- Exercise.MIN_SET to mMaxSet) {
-			total += getSet(i)
+		for (i <- Exercise.MIN_SET to _maxSet) {
+			total += set(i)
 		}
 		total
 	}
 
 	/** Confirm that current set was successfully finished */
 	def confirmSet() {
-		mCompletedExercises += getSet(mCurrentSet)
+		_completed += set(_currentSet)
 
-		if (mCompletedExercises > getTotal) {
-			mCompletedExercises = getTotal
+		if (_completed > total) {
+			_completed = total
 		}
 
-		mCurrentSet += 1
-		mCurrentExercises = getSet(mCurrentSet)
+		_currentSet += 1
+		_current = set(_currentSet)
 
-		if (mCurrentSet < Exercise.MIN_SET) {
-			mCurrentSet = Exercise.MIN_SET
-		} else if (mCurrentSet > mMaxSet) {
-			mCurrentSet = mMaxSet
-			mCurrentExercises = 0
+		if (_currentSet < Exercise.MIN_SET) {
+			_currentSet = Exercise.MIN_SET
+		} else if (_currentSet > _maxSet) {
+			_currentSet = _maxSet
+			_current = 0
 		}
 	}
 
 	/** Sets values of current exercise to default */
 	def reset() {
-		mCurrentSet = Exercise.MIN_SET
-		mCurrentExercises = getSet(1)
-		mCompletedExercises = 0
+		_currentSet = Exercise.MIN_SET
+		_current = set(1)
+		_completed = 0
 	}
 
-	private[exercises] var mLevel: Int = 0
-	private[exercises] var mMaxLevel: Int = 0
-	private[exercises] var mMaxSet: Int = 0
-	private var mCompletedExercises: Int = 0
-	private var mCurrentExercises: Int = 0
-	private var mCurrentSet: Int = 0
+	protected var _level: Int = 0
+	protected var _maxLevel: Int = 0
+	protected var _maxSet: Int = 0
+	private var _completed: Int = 0
+	private var _current: Int = 0
+	private var _currentSet: Int = 0
 }

@@ -31,11 +31,11 @@ class InitialDipsActivity extends Activity {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.scr_initial_dips)
 
-		mPrefs = new DipsPreferences(InitialDipsActivity.this)
+		_dipsPrefs = new DipsPreferences(InitialDipsActivity.this)
 		val bOk: Button = findViewById(R.id.btn_ok).asInstanceOf[Button]
 
-		mInitialDips = findViewById(R.id.et_initial_dips).asInstanceOf[EditText]
-		mInitialDips.setOnKeyListener(new View.OnKeyListener {
+		_initialDips = findViewById(R.id.et_initial_dips).asInstanceOf[EditText]
+		_initialDips.setOnKeyListener(new View.OnKeyListener {
 			def onKey(v: View, keyCode: Int, event: KeyEvent): Boolean = {
 				if (event.getAction == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
 					buttonOkClick()
@@ -53,7 +53,7 @@ class InitialDipsActivity extends Activity {
 	}
 
 	private def buttonOkClick() {
-		val enteredDips: String = mInitialDips.getText.toString
+		val enteredDips: String = _initialDips.getText.toString
 		val initDips: Int = Integer.parseInt(enteredDips)
 
 		if (Dips.recommend(initDips) < 0) {
@@ -68,9 +68,9 @@ class InitialDipsActivity extends Activity {
 	}
 
 	private def setupUser(dips: Int) {
-		mPrefs.setUserLevel(Dips.calcLevel(dips))
-		mPrefs.setDipsInitial(dips)
-		mPrefs.setAlreadyRegistered(true)
+		_dipsPrefs.userLevel(Dips.calcLevel(dips))
+		_dipsPrefs.dipsInitial(dips)
+		_dipsPrefs.alreadyRegistered(true)
 	}
 
 	private def showAlertDialog(id: Int) {
@@ -94,6 +94,6 @@ class InitialDipsActivity extends Activity {
 
 	@SuppressWarnings(Array("FieldCanBeLocal")) private final val DIALOG_TOO_FRAIL: Int = 2
 	private final val DIALOG_TOO_COOL: Int = 1
-	private var mInitialDips: EditText = null
-	private var mPrefs: IDipsPreferences = null
+	private var _initialDips: EditText = null
+	private var _dipsPrefs: IDipsPreferences = null
 }

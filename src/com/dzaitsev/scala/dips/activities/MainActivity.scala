@@ -26,8 +26,8 @@ class MainActivity extends Activity {
 		if (resultCode == Activity.RESULT_OK) {
 			updateUserProgress()
 
-			if (mDips.getRemaining <= 0) {
-				mDoneButton.setText(R.string.finish)
+			if (_dips.remaining <= 0) {
+				_doneButton.setText(R.string.finish)
 			}
 		} else if (resultCode == Activity.RESULT_CANCELED) {
 			// do nothing
@@ -38,17 +38,19 @@ class MainActivity extends Activity {
 	protected override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.scr_stats)
-		mPrefs = new DipsPreferences(MainActivity.this)
-		initUserProgress()
-		mDoneButton = findViewById(R.id.btn_done).asInstanceOf[Button]
-		mCurrentTextView = findViewById(R.id.tv_cur_exercises).asInstanceOf[TextView]
-		mCompletedTextView = findViewById(R.id.tv_done).asInstanceOf[TextView]
-		mRemainingTextView = findViewById(R.id.tv_remaining).asInstanceOf[TextView]
+		_dipsPrefs = new DipsPreferences(MainActivity.this)
 
-		mCurrentTextView.setText(String.valueOf(mDips.getCurrent))
-		mCompletedTextView.setText(String.valueOf(mDips.getCompleted))
-		mRemainingTextView.setText(String.valueOf(mDips.getRemaining))
-		mDoneButton.setOnClickListener(new View.OnClickListener {
+		initUserProgress()
+
+		_doneButton = findViewById(R.id.btn_done).asInstanceOf[Button]
+		_currentTextView = findViewById(R.id.tv_cur_exercises).asInstanceOf[TextView]
+		_completedTextView = findViewById(R.id.tv_done).asInstanceOf[TextView]
+		_remainingTextView = findViewById(R.id.tv_remaining).asInstanceOf[TextView]
+
+		_currentTextView.setText(String.valueOf(_dips.current))
+		_completedTextView.setText(String.valueOf(_dips.completed))
+		_remainingTextView.setText(String.valueOf(_dips.remaining))
+		_doneButton.setOnClickListener(new View.OnClickListener {
 			def onClick(view: View) {
 				buttonDoneClick()
 			}
@@ -56,7 +58,7 @@ class MainActivity extends Activity {
 	}
 
 	private def buttonDoneClick() {
-		if (mDips.getRemaining <= 0) {
+		if (_dips.remaining <= 0) {
 			showDialog()
 		} else {
 			val intent: Intent = new Intent(this, classOf[TimerActivity])
@@ -67,9 +69,9 @@ class MainActivity extends Activity {
 	}
 
 	private def initUserProgress() {
-		val mUserLevel: Int = mPrefs.getUserLevel
+		val mUserLevel: Int = _dipsPrefs.userLevel
 
-		mDips = new Dips(mUserLevel)
+		_dips = new Dips(mUserLevel)
 	}
 
 	private def showDialog() {
@@ -77,10 +79,11 @@ class MainActivity extends Activity {
 		dialog.setCancelable(false)
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 		dialog.setContentView(R.layout.dlg_after_training)
+
 		val bEasy: Button = dialog.findViewById(R.id.btn_easy).asInstanceOf[Button]
 		bEasy.setOnClickListener(new View.OnClickListener {
 			def onClick(view: View) {
-				mPrefs.setUserLevel(mPrefs.getUserLevel + 1)
+				_dipsPrefs.userLevel(_dipsPrefs.userLevel + 1)
 				dialog.dismiss()
 				finish()
 			}
@@ -97,7 +100,7 @@ class MainActivity extends Activity {
 		val bHard: Button = dialog.findViewById(R.id.btn_hard).asInstanceOf[Button]
 		bHard.setOnClickListener(new View.OnClickListener {
 			def onClick(view: View) {
-				mPrefs.setUserLevel(mPrefs.getUserLevel - 1)
+				_dipsPrefs.userLevel(_dipsPrefs.userLevel - 1)
 				dialog.dismiss()
 				finish()
 			}
@@ -106,16 +109,16 @@ class MainActivity extends Activity {
 	}
 
 	private def updateUserProgress() {
-		mDips.confirmSet()
-		mCurrentTextView.setText(String.valueOf(mDips.getCurrent))
-		mCompletedTextView.setText(String.valueOf(mDips.getCompleted))
-		mRemainingTextView.setText(String.valueOf(mDips.getRemaining))
+		_dips.confirmSet()
+		_currentTextView.setText(String.valueOf(_dips.current))
+		_completedTextView.setText(String.valueOf(_dips.completed))
+		_remainingTextView.setText(String.valueOf(_dips.remaining))
 	}
 
-	private var mDoneButton: Button = null
-	private var mDips: Exercise = null
-	private var mPrefs: IDipsPreferences = null
-	private var mCompletedTextView: TextView = null
-	private var mCurrentTextView: TextView = null
-	private var mRemainingTextView: TextView = null
+	private var _doneButton: Button = null
+	private var _dips: Exercise = null
+	private var _dipsPrefs: IDipsPreferences = null
+	private var _completedTextView: TextView = null
+	private var _currentTextView: TextView = null
+	private var _remainingTextView: TextView = null
 }

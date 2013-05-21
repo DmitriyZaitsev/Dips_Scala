@@ -33,26 +33,26 @@ class TimerActivity extends Activity {
 	protected override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.scr_timer)
-		mDigitLeft = findViewById(R.id.iv_digit_left).asInstanceOf[ImageView]
-		mDigitRight = findViewById(R.id.iv_digit_right).asInstanceOf[ImageView]
+		_digitLeft = findViewById(R.id.iv_digit_left).asInstanceOf[ImageView]
+		_digitRight = findViewById(R.id.iv_digit_right).asInstanceOf[ImageView]
 		val mProceed: Button = findViewById(R.id.btn_proceed).asInstanceOf[Button]
 		mProceed.setOnClickListener(new View.OnClickListener {
 			def onClick(view: View) {
 				setResultOkAndFinish()
 			}
 		})
-		mHandler = new UiUpdateHandler
-		mExecutorService = Executors.newSingleThreadExecutor
+		_handler = new UiUpdateHandler
+		_executorService = Executors.newSingleThreadExecutor
 	}
 
 	protected override def onPause() {
 		super.onPause()
-		mExecutorService.shutdown()
+		_executorService.shutdown()
 	}
 
 	protected override def onResume() {
 		super.onResume()
-		mExecutorService.execute(new TimerThread(mHandler, 90))
+		_executorService.execute(new TimerThread(_handler, 90))
 	}
 
 	private def setResultCancelAndFinish() {
@@ -74,10 +74,10 @@ class TimerActivity extends Activity {
 		}.start()
 	}
 
-	private var mExecutorService: ExecutorService = null
-	private var mHandler: Handler = null
-	private var mDigitLeft: ImageView = null
-	private var mDigitRight: ImageView = null
+	private var _executorService: ExecutorService = null
+	private var _handler: Handler = null
+	private var _digitLeft: ImageView = null
+	private var _digitRight: ImageView = null
 
 	private class UiUpdateHandler extends Handler {
 
@@ -90,10 +90,10 @@ class TimerActivity extends Activity {
 				val seconds: Int = message.what - 1
 				val leftDigit: Int = seconds / 10
 				if (seconds % 10 == 9) {
-					switchDigit(mDigitLeft, leftDigit)
+					switchDigit(_digitLeft, leftDigit)
 				}
 				val rightDigit: Int = seconds - leftDigit * 10
-				switchDigit(mDigitRight, rightDigit)
+				switchDigit(_digitRight, rightDigit)
 			}
 		}
 

@@ -13,13 +13,13 @@ trait IDipsPreferences {
 	final val KEY_USER_LEVEL: String = "user_level"
 
 	/** @return <i>true</i> if user already registered */
-	def isAlreadyRegistered: Boolean
+	def alreadyRegistered: Boolean
 
-	def getUserLevel: Int
+	def userLevel: Int
 
-	def setAlreadyRegistered(alreadyRegistered: Boolean)
+	def alreadyRegistered(alreadyRegistered: Boolean)
 
-	def setDipsInitial(dipsInitial: Int)
+	def dipsInitial(dipsInitial: Int)
 
-	def setUserLevel(userLevel: Int)
+	def userLevel(userLevel: Int)
 }
