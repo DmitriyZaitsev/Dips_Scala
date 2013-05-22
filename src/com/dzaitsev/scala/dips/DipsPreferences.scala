@@ -25,7 +25,7 @@ final class DipsPreferences extends IDipsPreferences {
 		_preferencesEditor.commit
 	}
 
-	def dipsInitial(dipsInitial: Int): Boolean = {
+	def dipsInitial(dipsInitial: Int) {
 		_preferencesEditor.putInt(KEY_DIPS_INITIAL, dipsInitial)
 		_preferencesEditor.commit
 	}
