@@ -9,10 +9,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.dzaitsev.scala.dips.DipsPreferences
-import com.dzaitsev.scala.dips.IDipsPreferences
+import com.dzaitsev.scala.dips.{IDipsPreferences, DipsPreferences, R}
 import com.dzaitsev.scala.dips.exercises.Dips
-import com.dzaitsev.scala.dips.R
 
 /**
  * ------------------------ DESCRIPTION ------------------------<br>
@@ -70,7 +68,7 @@ class InitialDipsActivity extends Activity {
 	private def setupUser(dips: Int) {
 		_dipsPrefs.userLevel(Dips.calcLevel(dips))
 		_dipsPrefs.dipsInitial(dips)
-		_dipsPrefs.alreadyRegistered(true)
+		_dipsPrefs.alreadyRegistered(alreadyRegistered = true)
 	}
 
 	private def showAlertDialog(id: Int) {

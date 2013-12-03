@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import com.dzaitsev.scala.dips.R
 import com.dzaitsev.scala.dips.TimerThread
@@ -18,7 +17,7 @@ import java.util.concurrent.Executors
  * <br>
  * Created by Dmitriy Zaitsev at 2013-04-25, 14:40.<br>
  */
-class TimerActivity extends Activity {
+class TimerActivity extends Activity with View.OnClickListener {
 
 	override def onBackPressed() {
 		super.onBackPressed()
@@ -33,26 +32,20 @@ class TimerActivity extends Activity {
 	protected override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.scr_timer)
-		_digitLeft = findViewById(R.id.iv_digit_left).asInstanceOf[ImageView]
-		_digitRight = findViewById(R.id.iv_digit_right).asInstanceOf[ImageView]
-		val mProceed: Button = findViewById(R.id.btn_proceed).asInstanceOf[Button]
-		mProceed.setOnClickListener(new View.OnClickListener {
-			def onClick(view: View) {
-				setResultOkAndFinish()
-			}
-		})
-		_handler = new UiUpdateHandler
-		_executorService = Executors.newSingleThreadExecutor
+		mDigitLeft = findViewById(R.id.iv_digit_left).asInstanceOf[ImageView]
+		mDigitRight = findViewById(R.id.iv_digit_right).asInstanceOf[ImageView]
+		mHandler = new UiUpdateHandler
+		mExecutorService = Executors.newSingleThreadExecutor
 	}
 
 	protected override def onPause() {
 		super.onPause()
-		_executorService.shutdown()
+		mExecutorService.shutdown()
 	}
 
 	protected override def onResume() {
 		super.onResume()
-		_executorService.execute(new TimerThread(_handler, 90))
+		mExecutorService.execute(new TimerThread(mHandler, 90))
 	}
 
 	private def setResultCancelAndFinish() {
@@ -68,16 +61,16 @@ class TimerActivity extends Activity {
 	private def playAlarm() {
 		new Thread {
 			override def run() {
-				val mp: MediaPlayer = MediaPlayer.create(TimerActivity.this, R.raw.alarme)
-				mp.start()
+				val mediaPlayer = MediaPlayer.create(TimerActivity.this, R.raw.alarme)
+				mediaPlayer.start()
 			}
 		}.start()
 	}
 
-	private var _executorService: ExecutorService = null
-	private var _handler: Handler = null
-	private var _digitLeft: ImageView = null
-	private var _digitRight: ImageView = null
+	private var mExecutorService: ExecutorService = _
+	private var mHandler: Handler = _
+	private var mDigitLeft: ImageView = _
+	private var mDigitRight: ImageView = _
 
 	private class UiUpdateHandler extends Handler {
 
@@ -87,13 +80,15 @@ class TimerActivity extends Activity {
 			} else if (message.what == Activity.RESULT_CANCELED) {
 				setResultCancelAndFinish()
 			} else {
-				val seconds: Int = message.what - 1
-				val leftDigit: Int = seconds / 10
+				val seconds = message.what - 1
+				val leftDigit = seconds / 10
+
 				if (seconds % 10 == 9) {
-					switchDigit(_digitLeft, leftDigit)
+					switchDigit(mDigitLeft, leftDigit)
 				}
-				val rightDigit: Int = seconds - leftDigit * 10
-				switchDigit(_digitRight, rightDigit)
+
+				val rightDigit = seconds - leftDigit * 10
+				switchDigit(mDigitRight, rightDigit)
 			}
 		}
 
@@ -108,10 +103,14 @@ class TimerActivity extends Activity {
 				case 6 => iv.setBackgroundResource(R.drawable.digit_6)
 				case 7 => iv.setBackgroundResource(R.drawable.digit_7)
 				case 8 => iv.setBackgroundResource(R.drawable.digit_8)
-				case 9 => iv.setBackgroundResource(R.drawable.digit_9)
 				case _ => iv.setBackgroundResource(R.drawable.digit_9)
 			}
 		}
 	}
 
+	def onClick(v: View) {
+		v.getId match {
+			case R.id.btn_proceed => setResultOkAndFinish()
+		}
+	}
 }

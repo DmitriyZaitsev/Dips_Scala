@@ -67,9 +67,27 @@ trait Exercise {
 		_completed = 0
 	}
 
-	protected var _level: Int = 0
-	protected var _maxLevel: Int = 0
-	protected var _maxSet: Int = 0
+	def level = _level
+
+	def level_=(l: Int) {
+		_level = l
+	}
+
+	def maxLevel = _maxLevel
+
+	def maxLevel_=(l: Int) {
+		_maxLevel = l
+	}
+
+	def maxSet = _maxSet
+
+	def maxSet_=(s: Int) {
+		_maxSet = s
+	}
+
+	private var _level: Int = 0
+	private var _maxLevel: Int = 0
+	private var _maxSet: Int = 0
 	private var _completed: Int = 0
 	private var _current: Int = 0
 	private var _currentSet: Int = 0

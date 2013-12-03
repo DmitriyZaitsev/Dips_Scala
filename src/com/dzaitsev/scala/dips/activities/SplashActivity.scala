@@ -21,14 +21,14 @@ class SplashActivity extends Activity {
 	}
 
 	private def switchScreen() {
-		val timer: Timer = new Timer
-		val task: TimerTask = new TimerTask {
+		val task = new TimerTask {
 
 			def run() {
 				startActivity(new Intent(SplashActivity.this, classOf[HelloActivity]))
 				finish()
 			}
 		}
-		timer.schedule(task, 2000)
+
+		(new Timer).schedule(task, 2000)
 	}
 }

@@ -8,9 +8,7 @@ import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
-import com.dzaitsev.scala.dips.DipsPreferences
-import com.dzaitsev.scala.dips.IDipsPreferences
-import com.dzaitsev.scala.dips.R
+import com.dzaitsev.scala.dips.{IDipsPreferences, DipsPreferences, R}
 import com.dzaitsev.scala.dips.exercises.Dips
 import com.dzaitsev.scala.dips.exercises.Exercise
 
